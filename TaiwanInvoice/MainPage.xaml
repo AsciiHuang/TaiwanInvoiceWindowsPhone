@@ -1,0 +1,92 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="TaiwanInvoice.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800" 
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False"
+    Loaded="MainPage_Loaded">
+    
+    <phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="SmallPanoramaTitle">
+            <ContentPresenter>
+                <TextBlock Text="{Binding}" 
+                           Height="250" 
+                           FontSize="140" FontWeight="ExtraBold" 
+                           Margin="0,80,0,-80"/>
+            </ContentPresenter>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.Background>
+            <ImageBrush ImageSource="bg.png"/>
+        </Grid.Background>
+        <ProgressBar x:Name="MainProgressBar" VerticalAlignment="Top" IsIndeterminate="True" Foreground="#D60B52" Height="25"/>
+        <controls:Panorama Title="Taiwan Invoice" TitleTemplate="{StaticResource SmallPanoramaTitle}" Foreground="#D60B52">
+            <controls:PanoramaItem Header="本期號碼">
+                <ListBox Margin="0,0,0,0" ItemsSource="{Binding CurrentItems}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,17" Width="420">
+                                <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Style="{StaticResource PhoneTextExtraLargeStyle}" Foreground="#D60B52"/>
+                                <TextBlock Text="{Binding Description}" TextWrapping="NoWrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextLargeStyle}" Foreground="#333333"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PanoramaItem>
+            <controls:PanoramaItem Header="上期號碼">
+                <ListBox Margin="0,0,0,0" ItemsSource="{Binding PreviousItems}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,17" Width="420">
+                                <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Style="{StaticResource PhoneTextExtraLargeStyle}" Foreground="#D60B52"/>
+                                <TextBlock Text="{Binding Description}" TextWrapping="NoWrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextLargeStyle}" Foreground="#333333"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PanoramaItem>
+            <controls:PanoramaItem Header="獎項說明">
+                <ListBox Margin="0,0,0,0" ItemsSource="{Binding RemarkItems}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" Margin="0,0,0,17">
+                                <TextBlock Text="{Binding Title}" TextWrapping="NoWrap" Style="{StaticResource PhoneTextExtraLargeStyle}" Foreground="#D60B52"/>
+                                <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextLargeStyle}" Foreground="#333333"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PanoramaItem>
+            <controls:PanoramaItem Header="其他資訊">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Height="95" Margin="10,0,10,0" Text="本軟體每週僅檢查一次最新資訊並備份於裝置上，若需要更即時的資訊請手動點選強制更新資訊。" TextWrapping="Wrap" Foreground="#D60B52"/>
+                    <TextBlock Height="40" Margin="10,0,10,0" Text="{Binding UpdateTimeText}" TextWrapping="NoWrap" Foreground="#333333"/>
+                    <ListBox Margin="0,0,0,0" Height="360" ItemsSource="{Binding InfoItems}" SelectionChanged="OnInfoListBoxSelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Height="50" Width="420" Margin="0,0,0,17" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <Image Margin="7,3,0,0" Source="{Binding Icon}" Width="23"/>
+                                    <TextBlock Text="{Binding Title}" Style="{StaticResource PhoneTextLargeStyle}" Width="380" Margin="10,0,0,0" Foreground="#333333"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </controls:PanoramaItem>
+        </controls:Panorama>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,0" VerticalAlignment="Top" Height="46">
+            <TextBlock VerticalAlignment="Center" TextAlignment="Center" Text="台灣發票" FontSize="24" Foreground="Black"/>
+        </StackPanel>
+    </Grid>
+</phone:PhoneApplicationPage>
